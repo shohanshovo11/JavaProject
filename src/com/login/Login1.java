@@ -51,10 +51,11 @@ public class Login1 {
 					window.Login.setVisible(true);
 					if(homeChoose == 1)
 					{
-						
+						///Admin
 					}
 					else if(homeChoose == 2 )
 					{
+						////Stud
 						
 					}
 					
@@ -146,6 +147,49 @@ public class Login1 {
 		panel_3.setLayout(null);
 		
 		JRadioButton studentRadio = new JRadioButton("Student");
+		studentRadio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					Enumeration<AbstractButton> bg = buttonGroup.getElements();
+					String role = null;
+					while(bg.hasMoreElements())
+					{
+						JRadioButton jrd = (JRadioButton) bg.nextElement();
+						if(jrd.isSelected())
+						{
+							role = jrd.getToolTipText();
+						}
+					}
+					String un = usernameField.getText();
+					String pass = passwordField.getText();
+					LoginDB ld = new LoginDB();
+					try {
+						@SuppressWarnings("unused")
+						int login2 = ld.login(un, pass, role);
+						if(login2==0)
+						{
+							System.out.println("Username or Password not found.");
+							homeChoose = 0 ;
+						}
+						if(login2==1)
+						{
+							System.out.println("Admin Logged in");
+							homeChoose = 1 ;
+						}
+						if(login2==2)
+						{
+							System.out.println("Student Logged in");
+							homeChoose = 2 ;
+						}
+					} catch (ClassNotFoundException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		studentRadio.setToolTipText("S");
 		studentRadio.setAlignmentY(Component.TOP_ALIGNMENT);
 		studentRadio.setForeground(new Color(0, 255, 255));
@@ -162,7 +206,41 @@ public class Login1 {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
 				{
-					
+					Enumeration<AbstractButton> bg = buttonGroup.getElements();
+					String role = null;
+					while(bg.hasMoreElements())
+					{
+						JRadioButton jrd = (JRadioButton) bg.nextElement();
+						if(jrd.isSelected())
+						{
+							role = jrd.getToolTipText();
+						}
+					}
+					String un = usernameField.getText();
+					String pass = passwordField.getText();
+					LoginDB ld = new LoginDB();
+					try {
+						@SuppressWarnings("unused")
+						int login2 = ld.login(un, pass, role);
+						if(login2==0)
+						{
+							System.out.println("Username or Password not found.");
+							homeChoose = 0 ;
+						}
+						if(login2==1)
+						{
+							System.out.println("Admin Logged in");
+							homeChoose = 1 ;
+						}
+						if(login2==2)
+						{
+							System.out.println("Student Logged in");
+							homeChoose = 2 ;
+						}
+					} catch (ClassNotFoundException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

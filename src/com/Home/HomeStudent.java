@@ -3,12 +3,10 @@ package com.Home;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
-public class HomeStudent extends JFrame {
+public class HomeStudent {
 
-	private JPanel contentPane;
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -17,8 +15,8 @@ public class HomeStudent extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeStudent frame = new HomeStudent();
-					frame.setVisible(true);
+					HomeStudent window = new HomeStudent();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -27,15 +25,20 @@ public class HomeStudent extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public HomeStudent() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		initialize();
+	}
 
-		setContentPane(contentPane);
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 	}
 
 }
