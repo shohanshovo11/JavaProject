@@ -1,17 +1,22 @@
 package com.Home;
 
 import java.awt.Dimension;
+import com.Registration.Registration;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
 import java.awt.Component;
+import java.awt.Cursor;
+
 import javax.swing.ImageIcon;
 import java.awt.Rectangle;
 import java.awt.Font;
@@ -19,31 +24,34 @@ import java.awt.Image;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class HomeAdmin {
 
-	private JFrame frame;
-	private final JPanel left = new JPanel();
-	private final JLabel lblNewLabel = new JLabel("Admin");
-	private final JPanel registerPanel = new JPanel();
-	private final JPanel billPanel = new JPanel();
-	private final JLabel billIcon = new JLabel("");
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HomeAdmin window = new HomeAdmin();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public JFrame frame;
+	public final JPanel left = new JPanel();
+	public final JLabel lblNewLabel = new JLabel();
+	public final JPanel registerPanel = new JPanel();
+	public final JPanel billPanel = new JPanel();
+	public final JLabel billIcon = new JLabel("");
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					HomeAdmin window = new HomeAdmin(null);
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+	public HomeAdmin(String adminName) {
+		initialize(adminName);
 	}
-	public HomeAdmin() {
-		initialize();
-	}
-	private void initialize() {
+	private void initialize(String adminName) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(121, 188, 184));
 		frame.getContentPane().setLayout(null);
@@ -54,7 +62,7 @@ public class HomeAdmin {
 		left.setLayout(null);
 		
 		JLabel adminImage = new JLabel("");
-		adminImage.setBounds(69, 158, 178, 217);
+		adminImage.setBounds(63, 158, 178, 217);
 		left.add(adminImage);
 		adminImage.setInheritsPopupMenu(false);
 		adminImage.setIconTextGap(0);
@@ -63,8 +71,11 @@ public class HomeAdmin {
 		adminImage.setIcon(new ImageIcon("E:\\admin.png"));
 		adminImage.setAlignmentY(Component.TOP_ALIGNMENT);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Ebrima", Font.PLAIN, 90));
-		lblNewLabel.setBounds(21, 400, 262, 90);
+		lblNewLabel.setFont(new Font("Cooper Black", Font.PLAIN, 26));
+		lblNewLabel.setBounds(10, 373, 273, 104);
+		lblNewLabel.setText(adminName);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setVerticalAlignment(SwingConstants.CENTER);
 		
 		left.add(lblNewLabel);
 		registerPanel.setBackground(new Color(42, 94, 142));
@@ -87,8 +98,19 @@ public class HomeAdmin {
 		registerIcon.setIcon(scaledIcon);
 		
 		JButton registerButton = new JButton("REG STUDENT");
+		registerButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				registerButton.setCursor(cur);
+			}
+		});
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Registration regstd = new Registration(adminName);
+				frame.dispose();
+				regstd.frame.setVisible(true);
+				
 			}
 		});
 		registerButton.setFocusPainted(false);
@@ -111,6 +133,13 @@ public class HomeAdmin {
 		billIcon.setIcon(scaledIcon2);
 		
 		JButton billButton = new JButton("BILL STATUS");
+		billButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				billButton.setCursor(cur);
+			}
+		});
 		billButton.setForeground(new Color(0, 0, 0));
 		billButton.setBackground(new Color(0, 153, 153));
 		billButton.setFont(new Font("Kalpurush", Font.PLAIN, 30));
@@ -135,6 +164,13 @@ public class HomeAdmin {
 		recordPanel.add(recordIcon);
 		
 		JButton recordButton = new JButton("RECORDS");
+		recordButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				recordButton.setCursor(cur);
+			}
+		});
 		recordButton.setForeground(new Color(0, 0, 0));
 		recordButton.setBackground(new Color(0, 153, 153));
 		recordButton.setFont(new Font("Kalpurush", Font.PLAIN, 30));
@@ -159,6 +195,13 @@ public class HomeAdmin {
 		feePanel.add(feeIcon);
 		
 		JButton feeButton = new JButton("FEE GENERATOR");
+		feeButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				feeButton.setCursor(cur);
+			}
+		});
 		feeButton.setForeground(new Color(0, 0, 0));
 		feeButton.setBackground(new Color(0, 153, 153));
 		feeButton.setFont(new Font("Kalpurush", Font.PLAIN, 30));
@@ -177,6 +220,13 @@ public class HomeAdmin {
 		recoveryPanel.add(recoveryIcon);
 		
 		JButton recoveryButton = new JButton("RECOVERY");
+		recoveryButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				recoveryButton.setCursor(cur);
+			}
+		});
 		recoveryButton.setForeground(new Color(0, 0, 0));
 		recoveryButton.setBackground(new Color(0, 153, 153));
 		recoveryButton.setFont(new Font("Kalpurush", Font.PLAIN, 30));
@@ -201,6 +251,13 @@ public class HomeAdmin {
 		deletePanel.add(deleteIcon);
 		
 		JButton deleteButton = new JButton("DELETE");
+		deleteButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				deleteButton.setCursor(cur);
+			}
+		});
 		deleteButton.setForeground(new Color(0, 0, 0));
 		deleteButton.setBackground(new Color(0, 153, 153));
 		deleteButton.setFont(new Font("Kalpurush", Font.PLAIN, 30));

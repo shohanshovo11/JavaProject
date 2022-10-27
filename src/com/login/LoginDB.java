@@ -1,7 +1,7 @@
 package com.login; 
 import java.sql.*;
 public class LoginDB {
-	int login(String uname,String password,String role) throws ClassNotFoundException, SQLException
+	String login(String uname,String password,String role) throws ClassNotFoundException, SQLException
 	{
 		String url = "jdbc:mysql://localhost:3306/login";
 		String un = "root";
@@ -17,20 +17,20 @@ public class LoginDB {
 				rs.close();
 				st.close();
 				con.close();
-				return 1;
+				return uname;
 			}
 			else if(rs.getString("id").equals(uname) && rs.getString("password").equals(password) && rs.getString("role").equals(role) && role=="S")
 			{
 				rs.close();
 				st.close();
 				con.close();
-				return 2;
+				return uname;
 			}
 		}
 		rs.close();
 		st.close();
 		con.close();
-		return 0;
+		return null;
 	}
 	static void registerStud(String fname,String lname,String Uname,String Pass,int cls,String doa,String phone) throws SQLException
 	{
@@ -68,12 +68,30 @@ public class LoginDB {
 		con.close();
 				
 	}
-	
-	
-	public static void main(String[] Args) throws SQLException, ClassNotFoundException
+	public int verifyUsername(String uname) throws SQLException
 	{
-		registerStud("MD","Sharif","Sharif11","root",3,"2020 01","55");
+		String url = "jdbc:mysql://localhost:3306/login";
+		String un = "root";
+		String pass = "root";
+		Connection con = DriverManager.getConnection(url,un,pass);
+		Statement st = con.createStatement();
+		String query = "SELECT id FROM login";
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next())
+		{
+			if(rs.getString("id").equals(uname))
+			{
+				return 0;
+			}
+		}
+		return 1;
 	}
+	
+	
+//	public static void main(String[] Args) throws SQLException, ClassNotFoundException
+//	{
+//		registerLogin("sldfsldjflasjdlfjalskdjflasjlf","root","A");
+//	}
 	
 	
 }

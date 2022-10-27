@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.awt.event.FocusAdapter;
@@ -22,6 +23,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DropMode;
 import javax.swing.UIManager;
+
+import com.Home.HomeAdmin;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
@@ -108,19 +112,24 @@ public class Login1 {
 				String pass = passwordField.getText();
 				LoginDB ld = new LoginDB();
 				try {
-					@SuppressWarnings("unused")
-					int login2 = ld.login(un, pass, role);
-					if(login2==0)
+					String login2 = ld.login(un, pass, role);
+					if(login2==null)
 					{
 						System.out.println("Username or Password not found.");
 						homeChoose = 0 ;
 					}
-					if(login2==1)
+					if(login2!=null && role=="A")
 					{
 						System.out.println("Admin Logged in");
+						
+						Login.dispose();
+						
+						HomeAdmin homeAdmin = new HomeAdmin(un);
+						homeAdmin.frame.setVisible(true);
+						
 						homeChoose = 1 ;
 					}
-					if(login2==2)
+					if(login2!=null && role=="S")
 					{
 						System.out.println("Student Logged in");
 						homeChoose = 2 ;
@@ -167,18 +176,22 @@ public class Login1 {
 					LoginDB ld = new LoginDB();
 					try {
 						@SuppressWarnings("unused")
-						int login2 = ld.login(un, pass, role);
-						if(login2==0)
+						String login2 = ld.login(un, pass, role);
+						if(login2==null)
 						{
 							System.out.println("Username or Password not found.");
 							homeChoose = 0 ;
 						}
-						if(login2==1)
+						if(login2!=null && role=="A")
 						{
+							Login.dispose();
 							System.out.println("Admin Logged in");
+							
+							HomeAdmin homeAdmin = new HomeAdmin(un);
+							homeAdmin.frame.setVisible(true);
 							homeChoose = 1 ;
 						}
-						if(login2==2)
+						if(login2!=null && role=="S")
 						{
 							System.out.println("Student Logged in");
 							homeChoose = 2 ;
@@ -221,18 +234,23 @@ public class Login1 {
 					LoginDB ld = new LoginDB();
 					try {
 						@SuppressWarnings("unused")
-						int login2 = ld.login(un, pass, role);
-						if(login2==0)
+						String login2 = ld.login(un, pass, role);
+						if(login2==null)
 						{
 							System.out.println("Username or Password not found.");
 							homeChoose = 0 ;
 						}
-						if(login2==1)
+						if(login2!=null && role=="A")
 						{
 							System.out.println("Admin Logged in");
+							Login.dispose();
+//							System.out.println("Admin Logged in");
+							
+							HomeAdmin homeAdmin = new HomeAdmin(un);
+							homeAdmin.frame.setVisible(true);
 							homeChoose = 1 ;
 						}
-						if(login2==2)
+						if(login2!=null && role=="S")
 						{
 							System.out.println("Student Logged in");
 							homeChoose = 2 ;
