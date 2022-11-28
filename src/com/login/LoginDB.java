@@ -53,7 +53,41 @@ public class LoginDB {
 		}
 		
 	}
-	static void registerLogin(String uname,String pass,String role) throws SQLException
+	public static int due(String tableName) throws SQLException
+	{
+		String url = "jdbc:mysql://localhost:3306/bill";
+		String un = "root";
+		String pass = "root";
+		Connection con = DriverManager.getConnection(url,un,pass);
+		Statement st = con.createStatement();
+		String query = "select due from bill."+tableName;
+		ResultSet x = st.executeQuery(query);
+		int totalDue = 0;
+		while(x.next())
+		{
+			int temp = Integer.valueOf(x.getString("due"));
+			totalDue=totalDue + temp;
+		}
+		return totalDue;
+	}
+	public static int paid(String tableName) throws SQLException
+	{
+		String url = "jdbc:mysql://localhost:3306/bill";
+		String un = "root";
+		String pass = "root";
+		Connection con = DriverManager.getConnection(url,un,pass);
+		Statement st = con.createStatement();
+		String query = "select paid from bill."+tableName;
+		ResultSet x = st.executeQuery(query);
+		int totalDue = 0;
+		while(x.next())
+		{
+			int temp = Integer.valueOf(x.getString("paid"));
+			totalDue=totalDue + temp;
+		}
+		return totalDue;
+	}
+	public static void registerLogin(String uname,String pass,String role) throws SQLException
 	{
 		String url ="jdbc:mysql://localhost:3306/login";
 		String username = "root";
@@ -81,17 +115,34 @@ public class LoginDB {
 		{
 			if(rs.getString("id").equals(uname))
 			{
-				return 0;
+//				System.out.println("gotcha");
+				return 1;
 			}
 		}
-		return 1;
+		return 0;
+	}
+	public static void deleteUser(String uname) throws SQLException
+	{
+		String url ="jdbc:mysql://localhost:3306/login";
+		String username = "root";
+		String passsword = "root";
+		Connection con = DriverManager.getConnection(url, username, passsword);
+		Statement st = con.createStatement();
+		String query = "delete from login where id='"+uname+"'";
+		st.executeUpdate(query);
+		
+//		System.out.println("Login details updated");
+		st.close();
+		con.close();
 	}
 	
 	
-//	public static void main(String[] Args) throws SQLException, ClassNotFoundException
-//	{
+	public static void main(String[] Args) throws SQLException, ClassNotFoundException
+	{
 //		registerLogin("sldfsldjflasjdlfjalskdjflasjlf","root","A");
-//	}
+//		paid("class1");
+//		deleteUser("aaa");
+	}
 	
 	
 }

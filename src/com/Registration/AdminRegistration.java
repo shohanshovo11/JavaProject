@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JToolBar;
@@ -24,11 +25,19 @@ import javax.swing.JPasswordField;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 
+import com.Home.HomeAdmin;
 import com.login.LoginDB;
 
 import javax.swing.JCheckBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPopupMenu;
+import java.awt.event.MouseAdapter;
+import javax.swing.JProgressBar;
 
 public class AdminRegistration {
 	public JFrame frame;
@@ -109,6 +118,7 @@ public class AdminRegistration {
 		left.add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(121, 188, 184));
 		panel.setBounds(500, 77, 520, 535);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -119,15 +129,56 @@ public class AdminRegistration {
 		
 		
 		usernameField = new JTextField();
+		usernameField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int keytyped = e.getKeyCode();
+				if(keytyped == KeyEvent.VK_ENTER)
+				{
+					LoginDB login = new LoginDB();
+					String choosenUname = null;
+					choosenUname = usernameField.getText();
+//					System.out.println(choosenUname);
+					try {
+						verifiedsign = login.verifyUsername(choosenUname);
+						/// 1 means accepted and 0 means rejected
+						if(verifiedsign==0)
+						{
+							ImageIcon icon5 = new ImageIcon("E:\\JavaProject\\img\\checked.png");
+							Image img5 = icon5.getImage();
+							Image imgScale5 = img5.getScaledInstance(verified.getWidth(), verified.getHeight(), Image.SCALE_SMOOTH);
+							ImageIcon scaledIcon5 = new ImageIcon(imgScale5);
+							verified.setIcon(scaledIcon5);
+							
+						}
+						else
+						{
+							ImageIcon icon5 = new ImageIcon("E:\\JavaProject\\img\\rejected.png");
+							Image img5 = icon5.getImage();
+							Image imgScale5 = img5.getScaledInstance(verified.getWidth(), verified.getHeight(), Image.SCALE_SMOOTH);
+							ImageIcon scaledIcon5 = new ImageIcon(imgScale5);
+							verified.setIcon(scaledIcon5);
+						}
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		usernameField.setText(null);
 		usernameField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				LoginDB login = new LoginDB();
-				String choosenUname = usernameField.getText();
+				String choosenUname = null;
+				choosenUname = usernameField.getText();
+//				System.out.println(choosenUname);
 				try {
 					verifiedsign = login.verifyUsername(choosenUname);
 					/// 1 means accepted and 0 means rejected
-					if(verifiedsign==1)
+					if(verifiedsign==0)
 					{
 						ImageIcon icon5 = new ImageIcon("E:\\JavaProject\\img\\checked.png");
 						Image img5 = icon5.getImage();
@@ -162,8 +213,34 @@ public class AdminRegistration {
 		panel.add(passwordField);
 		
 		JButton submitButton = new JButton("SUBMIT");
-		submitButton.setBackground(Color.LIGHT_GRAY);
+		submitButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+//				System.out.println("Pressed");
+				try {
+//					System.out.println(passwordField.getText());
+					int x = JOptionPane.showConfirmDialog(frame, "Sure?");
+//					System.out.println(x);
+					if(x==0 && verifiedsign==1)
+					{
+						LoginDB.registerLogin(usernameField.getText(),passwordField.getText(),"A");						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(frame, "Try Again");
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		submitButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		submitButton.setBackground(new Color(255, 255, 255));
 		submitButton.setBounds(59, 372, 401, 55);
+		submitButton.setBorder(null);
+		submitButton.setFocusable(false);
 		panel.add(submitButton);
 		
 		JLabel usernameLabel = new JLabel("USERNAME");
@@ -176,12 +253,67 @@ public class AdminRegistration {
 		passwordLabel.setBounds(59, 204, 104, 42);
 		panel.add(passwordLabel);
 		
+		JButton backButton = new JButton("BACK");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registration r = new Registration(adminName);
+				r.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
+		backButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				backButton.setCursor(cur);
+			}
+		});
+		backButton.setBackground(new Color(0, 21, 36));
+		backButton.setForeground(new Color(255, 255, 255));
+		backButton.setBounds(94, 512, 110, 50);
+		left.add(backButton);
+		backButton.setFocusable(false);
+		backButton.setBorder(null);
+		
 		JCheckBox viewBox = new JCheckBox("View");
-		viewBox.setBounds(461, 267, 53, 21);
+		viewBox.setFocusable(false);
+		viewBox.setBackground(new Color(121, 188, 184));
+		viewBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(viewBox.isSelected()==true)
+				{
+					passwordField.setEchoChar((char)0);
+				}
+				else
+				{
+					passwordField.setEchoChar('●');
+				}
+			}
+		});
+		viewBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		viewBox.setBounds(461, 251, 110, 42);
 		panel.add(viewBox);
 		
 		
 		///
 		
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

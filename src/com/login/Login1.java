@@ -38,7 +38,7 @@ import java.awt.event.ActionEvent;
 
 public class Login1 {
 
-	private JFrame Login;
+	public JFrame Login;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();

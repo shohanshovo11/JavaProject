@@ -16,6 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import com.Home.HomeAdmin;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -96,6 +99,29 @@ public class Registration {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setVerticalAlignment(SwingConstants.CENTER);
 		left.add(lblNewLabel);
+		
+		JButton backButton = new JButton("BACK");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HomeAdmin ha = new HomeAdmin(adminName);
+				ha.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
+		backButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				backButton.setCursor(cur);
+			}
+		});
+		backButton.setBackground(new Color(0, 21, 36));
+		backButton.setForeground(new Color(255, 255, 255));
+		backButton.setBounds(94, 512, 110, 50);
+		left.add(backButton);
+		backButton.setFocusable(false);
+		backButton.setBorder(null);
 		
 		JButton feeButton = new JButton("FEE GENERATOR");
 		feeButton.addMouseMotionListener(new MouseMotionAdapter() {

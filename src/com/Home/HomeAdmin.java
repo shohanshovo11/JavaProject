@@ -1,7 +1,10 @@
 package com.Home;
 
 import java.awt.Dimension;
+
 import com.Registration.Registration;
+import com.login.Login1;
+import com.Home.Bill;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -27,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
 
 public class HomeAdmin {
 
@@ -36,18 +40,18 @@ public class HomeAdmin {
 	public final JPanel registerPanel = new JPanel();
 	public final JPanel billPanel = new JPanel();
 	public final JLabel billIcon = new JLabel("");
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					HomeAdmin window = new HomeAdmin(null);
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HomeAdmin window = new HomeAdmin(null);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	public HomeAdmin(String adminName) {
 		initialize(adminName);
 	}
@@ -70,14 +74,45 @@ public class HomeAdmin {
 		adminImage.setMaximumSize(new Dimension(187, 187));
 		adminImage.setIcon(new ImageIcon("E:\\admin.png"));
 		adminImage.setAlignmentY(Component.TOP_ALIGNMENT);
+		lblNewLabel.setBounds(10, 373, 273, 104);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Cooper Black", Font.PLAIN, 26));
-		lblNewLabel.setBounds(10, 373, 273, 104);
 		lblNewLabel.setText(adminName);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setVerticalAlignment(SwingConstants.CENTER);
 		
 		left.add(lblNewLabel);
+		
+		JButton signOutButton = new JButton("Sign Out");
+		signOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				try {
+					Login1 login = new Login1();
+					login.Login.setVisible(true);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		signOutButton.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Cursor cur = new Cursor(Cursor.HAND_CURSOR);
+				signOutButton.setCursor(cur);
+			}
+		});
+		signOutButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		signOutButton.setBorder(null);
+		signOutButton.setFocusable(false);
+		signOutButton.setBackground(new Color(0, 21, 36));
+		signOutButton.setForeground(new Color(255, 255, 255));
+		signOutButton.setBounds(95, 516, 108, 44);
+		left.add(signOutButton);
 		registerPanel.setBackground(new Color(42, 94, 142));
 		registerPanel.setBounds(315, 158, 270, 195);
 		
@@ -133,6 +168,13 @@ public class HomeAdmin {
 		billIcon.setIcon(scaledIcon2);
 		
 		JButton billButton = new JButton("BILL STATUS");
+		billButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Bill bill = new Bill(adminName);
+				frame.dispose();
+				bill.frame.setVisible(true);
+			}
+		});
 		billButton.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -164,6 +206,13 @@ public class HomeAdmin {
 		recordPanel.add(recordIcon);
 		
 		JButton recordButton = new JButton("RECORDS");
+		recordButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Record record = new Record(adminName);
+				record.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		recordButton.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -251,6 +300,13 @@ public class HomeAdmin {
 		deletePanel.add(deleteIcon);
 		
 		JButton deleteButton = new JButton("DELETE");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Delete dl = new Delete(adminName);
+				dl.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		deleteButton.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
