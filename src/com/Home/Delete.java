@@ -183,6 +183,26 @@ public class Delete {
 		searchButton.setBounds(960, 57, 95, 36);
 		frame.getContentPane().add(searchButton);
 		
+		JButton class1Delete = new JButton("CLASS 1");
+		class1Delete.setBounds(367, 163, 105, 105);
+		frame.getContentPane().add(class1Delete);
+		
+		JButton class2Delete = new JButton("CLASS 2");
+		class2Delete.setBounds(529, 163, 105, 105);
+		frame.getContentPane().add(class2Delete);
+		
+		JButton class3Delete = new JButton("CLASS 3");
+		class3Delete.setBounds(685, 163, 105, 105);
+		frame.getContentPane().add(class3Delete);
+		
+		JButton class4Delete = new JButton("CLASS 4");
+		class4Delete.setBounds(845, 163, 105, 105);
+		frame.getContentPane().add(class4Delete);
+		
+		JButton class5Delete = new JButton("CLASS 5");
+		class5Delete.setBounds(994, 163, 108, 105);
+		frame.getContentPane().add(class5Delete);
+		
 		
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {

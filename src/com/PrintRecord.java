@@ -1,4 +1,4 @@
-package com.Home;
+package com;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -19,7 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PrintFixture {
+public class PrintRecord {
 
 	JFrame frame;
 	JTable table;
@@ -31,7 +31,7 @@ public class PrintFixture {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrintFixture window = new PrintFixture("class1");
+					PrintRecord window = new PrintRecord("class1");
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class PrintFixture {
 	/**
 	 * Create the application.
 	 */
-	public PrintFixture(String s) {
+	public PrintRecord(String s) {
 		initialize(s);
 	}
 

@@ -53,6 +53,40 @@ public class LoginDB {
 		}
 		
 	}
+	public static String getPassword(String username,String phoneNo) throws SQLException
+	{
+		String url = "jdbc:mysql://localhost:3306/login";
+		String un = "root";
+		String pass = "root";
+		Connection con = DriverManager.getConnection(url,un,pass);
+		Statement st = con.createStatement();
+		String query = "select uname,pass,phone from stud_details.stud_details where uname='"+username+"'";
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next())
+		{
+			if(rs.getString("uname").equals(username) && rs.getString("phone").equals(phoneNo))
+			{
+				return rs.getString("pass");
+			}
+		}
+		return null;
+		
+	}
+	public static void registerLogin(String uname,String pass,String role) throws SQLException
+	{
+		String url ="jdbc:mysql://localhost:3306/login";
+		String username = "root";
+		String passsword = "root";
+		Connection con = DriverManager.getConnection(url, username, passsword);
+		Statement st = con.createStatement();
+		String query = "INSERT INTO login.login values ('"+uname+"','"+pass+"','"+role+"')";
+		st.executeUpdate(query);
+		
+		System.out.println("Login details updated");
+		st.close();
+		con.close();
+				
+	}
 	public static int due(String tableName) throws SQLException
 	{
 		String url = "jdbc:mysql://localhost:3306/bill";
@@ -86,21 +120,6 @@ public class LoginDB {
 			totalDue=totalDue + temp;
 		}
 		return totalDue;
-	}
-	public static void registerLogin(String uname,String pass,String role) throws SQLException
-	{
-		String url ="jdbc:mysql://localhost:3306/login";
-		String username = "root";
-		String passsword = "root";
-		Connection con = DriverManager.getConnection(url, username, passsword);
-		Statement st = con.createStatement();
-		String query = "INSERT INTO login.login values ('"+uname+"','"+pass+"','"+role+"')";
-		st.executeUpdate(query);
-		
-		System.out.println("Login details updated");
-		st.close();
-		con.close();
-				
 	}
 	public int verifyUsername(String uname) throws SQLException
 	{
@@ -142,6 +161,7 @@ public class LoginDB {
 //		registerLogin("sldfsldjflasjdlfjalskdjflasjlf","root","A");
 //		paid("class1");
 //		deleteUser("aaa");
+		System.out.println(LoginDB.getPassword("Hafiz11","016464645"));
 	}
 	
 	
